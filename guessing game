@@ -1,0 +1,44 @@
+import java.util.Scanner;
+class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        
+        char hw[] = {'e', 'n', 'c', 'y', 'c', 'l', 'o', 'p', 'e', 'd', 'i', 'a'};
+        boolean win = false;
+        int lives = 3;
+        StringBuilder guessedWord = new StringBuilder("_".repeat(hw.length)); // To show guessed letters
+        System.out.println("Hidden word is made up of " + hw.length + " letters.");
+        
+        while (lives > 0 && !win) {
+            System.out.println("Current word: " + guessedWord);
+            System.out.print("Enter a letter: ");
+            String c = input.next();
+            // Check if the input is valid
+            if (c.length() != 1) {
+                System.out.println("Please enter only one letter.");
+                continue;
+            }
+            char guess = c.charAt(0);
+            boolean correctGuess = false;
+            for (int i = 0; i < hw.length; i++) {
+                if (hw[i] == guess) {
+                    guessedWord.setCharAt(i, guess);
+                    correctGuess = true;
+                }
+            }
+            if (!correctGuess) {
+                lives--;
+                System.out.println("Incorrect guess. Lives remaining: " + lives);
+            }
+            if (guessedWord.toString().equals(new String(hw))) {
+                win = true;
+            }
+        }
+        if (win) {
+            System.out.println("Congratulations! You've guessed the word: " + guessedWord);
+        } else {
+            System.out.println("Game over! The word was: " + new String(hw));
+        }
+        input.close();
+    }
+}
